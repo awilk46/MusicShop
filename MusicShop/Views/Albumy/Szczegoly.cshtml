@@ -1,0 +1,59 @@
+﻿@model MusicShop.Models.Album
+@using MusicShop.Infrastructure
+
+@{
+    ViewBag.Title = "Szczegoly";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="flex-category-container2 width-search-sitemap pad-sm border add-marg edit-width koszyk-sm-mg">
+    <div class="flex-category-item">
+        <a class="anchor-edit" href="link">
+            @Html.MvcSiteMap().SiteMapPath()
+        </a>
+    </div>
+</div>
+<div class="flex-category-container">
+    <div class="categories-menu-width flex-category-item">
+        @Html.Action("KategorieMenu")
+    </div>
+    <div style="margin-left:1%; width:84%;" class="flex-container-more card-body-edit">
+        <div class="flex-category-item">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="@Url.IkonyKategoriiSciezka(@Model.Okladkalbumu)" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Nazwa Albumu: @Model.NazwaAlbumu</h5>
+                            <p class="card-text">Nazwa Zespołu: @Model.NazwaZespolu</p>
+                            <p class="card-text">Rok wydania: @Model.RokWydania</p>
+                            <p class="card-text">Rodzaj krążka: @Model.RodzajKrazka</p>
+                            <p class="card-text">Kategoria: @Model.Kategoria.NazwaKategorii</p>
+                            @if (Model.Opis == null)
+                            {
+                                <p class="card-text">Pusty Opis</p>
+                            }
+                            else
+                            {
+                                <p class="card-text">@Model.Opis</p>
+                            }
+                            <p class="card-text">Cena: @Model.CenaAlbumu</p>
+                            <div>
+                                <a class="a-szczeg-dod" href="@Url.Action("DodajDoKoszyka","Koszyk",new {id= Model.AlbumID })">
+                                    <img src="../Content/Images/add.png" alt="Card image cap">
+                                </a>
+                            </div>
+                            <p class="card-text"><small class="text-muted">Data dodania: @Model.DataDodania</small></p>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("DodajAlbum", "Manage", new { albumId = Model.AlbumID })" class="anchor-edit" style="font-weight:bold;">Edytuj</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

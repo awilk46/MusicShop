@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MusicShop.ViewModels.RoleViewModel>
+@{
+    ViewBag.Title = "ListaUzytkownikow";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+@section Scripts
+{
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
+
+}
+<
+<h1 style="text-align: center; margin-top:3%;">Lista Użytkowników</h1>
+<hr style="width: 50%; text-align:center; margin-bottom:3%;" />
+<div style="margin-bottom:5%;">
+    <table class="table-editor" style="margin-left:auto; margin-right:auto; text-align: center !important;">
+        <tr>
+            <td style="width:250px; font-weight: 600;">Nazwa użytkownika</td>
+            <td style="width:250px; font-weight: 600;">Zmień rolę</td>
+            <td style="width:250px; font-weight: 600;">Usuń użytkownika</td>
+        </tr>
+        @{
+            int i = 0;
+
+        }
+        @foreach (var user in Model)
+        {
+
+            foreach (var modelu in @user.Users)
+            {
+                i++;
+                <tr>
+
+                    <td style="width:250px;">@modelu.UserName</td>
+                    <td style="width:250px;">
+
+                        @using (Html.BeginForm("EdytujRole2", "Manage", new { rolaDoModyfikacji = user.CurrentRole, idUzytkownika = modelu.UserId }
+                        , FormMethod.Post, new { rolaDoModyfikacji = user.CurrentRole, idUzytkownika = modelu.UserId, @id = "Form-" + @i }))
+                        {
+                            @Html.HiddenFor(o => modelu.UserId, new { @id = "hfRoleName-" + @i })
+                            @Html.DropDownListFor(u => user.Name, new SelectList(ViewBag.Roles, "Value", "Text", user.CurrentRole), new { style="width:150px;",@class = "custom-select RolaZmien-" + @i})
+                        }
+
+                    </td>
+                    <td style="width:250px;">
+
+                    <a class="anchor-edit" href="@Url.Action("UsunUzytkownika", "Manage", new { email = modelu.UserName })">Usuń</a>
+                      
+                    </td>
+                </tr>
+                <script>
+
+            $(".RolaZmien-@i").on("change", function () {
+
+              $("#hfRoleName-@i").val($(this).find("option:selected").text());
+              var rolaDoModyfikacji = $("#Form-@i").attr('rolaDoModyfikacji', $(".RolaZmien-@i").val());
+              var zmienRole = $(".RolaZmien-@i").val();
+          //    $($zmienRole).replaceWith($rolaDoModyfikacji);
+              //alert("Zmieniono rolę na: " + $zmienRole);
+              //  alert("Zmieniono rolę na: " + zmienRole);
+              var url = '@Url.Action("EdytujRole2","Manage")';
+              var fu = zmienRole;
+              var fu2 = $("#Form-@i").attr('idUzytkownika');
+              $("#Form-@i").prop('action', url + "?rolaDoModyfikacji=" + fu+"&idUzytkownika="+fu2);
+                var f = $(this.form);
+                var a = f.closest("a");
+              var action = f.attr("action");
+              var serializedForm = f.serialize();
+               $.post(action, serializedForm).done(function () {
+                   alert("Zmieniono rolę na: " + zmienRole);
+                   @*if ('@user.CurrentRole' == "Admin") {
+                       a.removeClass("anchor-edit");
+                       a.removeAttr("href");
+            }
+                   else {
+                       a.addClass("anchor-edit");
+                       a.attr("href",'@Url.Action("UsunUzytkownika", "Manage", new { email = modelu.UserName })');
+            }*@
+              });
+                });
+
+                </script>
+
+            }
+
+        }
+    </table>
+</div>

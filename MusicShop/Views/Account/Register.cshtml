@@ -1,0 +1,80 @@
+﻿@model MusicShop.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_RightSectionLayout.cshtml";
+}
+
+
+@section SectionTitle
+{
+    Rejestracja
+}
+<div class="txt-ct-mgbt">
+    @using (@Html.BeginForm("Register", "Account"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="login-error" class="account-validation-message2" style="margin-bottom: 1%;">
+            @Html.ValidationMessage("loginerror", "")
+            @Html.ValidationSummary()
+        </div>
+
+        <table id="login-table" style="margin:auto;">
+            <tr>
+                <td class="td-forlabel">@Html.LabelFor(o => o.Email, "E-mail:")</td>
+                <td class="td-val-label" >
+                    @Html.TextBoxFor(o => o.Email, new { style = "width:210px", @class = "form-control" })              
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="login-validation-message" style="width:320px; padding-left:110px;">
+                        @Html.ValidationMessageFor(o => o.Email)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-forlabel">@Html.LabelFor(o => o.Password, "Hasło:")</td>
+                <td class="td-val-label">
+                    @Html.PasswordFor(o => o.Password, new { style = "width:210px", @class = "form-control" })              
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="login-validation-message" style="width:320px; padding-left:110px;">
+                        @Html.ValidationMessageFor(o => o.Password)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-forlabel">
+                    @Html.LabelFor(o => o.ConfirmPassword, "Potwierdź hasło:")
+                </td>
+                <td class="td-val-label">
+                    @Html.PasswordFor(o => o.ConfirmPassword, new { style = "width:210px", @class = "form-control" })                 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="login-validation-message" style="width:320px; padding-left:110px;">
+                        @Html.ValidationMessageFor(o => o.ConfirmPassword)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="btn-reg">
+                    @*<input type="submit" value="Zarejestruj" class="submitLink"  />*@
+                    <button type="submit" class="btn btn-outline-secondary">Zarejestruj</button>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery-2.2.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}

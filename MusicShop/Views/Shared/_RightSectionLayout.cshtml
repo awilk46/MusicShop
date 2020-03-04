@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Logowanie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="flex-category-container">
+    <div class="koszyk-a width-search-sitemap pad-sm border koszyk-sm-mg edit-width bg-light">
+        <a class="anchor-edit" href="link">
+            @Html.MvcSiteMap().SiteMapPath()
+        </a>
+    </div>
+    <div class="flex-koszyk-item categories-menu-width koszyk-cat-mg">
+        @Html.Action("KategorieMenu", "Albumy")
+    </div>
+    <div class="flex-koszyk-item item-koszyk-width">
+        <div class="txt-ct-mgbt">
+            <h1>
+                @RenderSection("SectionTitle", required: false)
+            </h1>
+        </div>
+        @RenderBody()
+    </div>
+</div>
+
+@* <div id="ListaKategoriiZawartosc">
+        @Html.Action("KategorieMenu", "Albumy")
+
+        <div id="KategorieListPrawaSekcja">
+            <div id="Breadcrumb">
+                @Html.MvcSiteMap().SiteMapPath()
+            </div>
+            <section class="SekcjaKoszyk">
+                <div class="SekcjaHeader" style="margin-bottom: 0px;">
+                    <h1>
+                        @RenderSection("SectionTitle", required: false)
+                    </h1>
+                </div>
+                @RenderBody()
+            </section>
+        </div>
+    </div>
+*@
+@section Scripts
+{
+    @RenderSection("Scripts", required: false)
+}
+@*<div class="flex-category-container">
+        <div class="flex-category-item categories-menu-width">
+            @Html.Action("KategorieMenu", "Albumy")
+        </div>
+        <div class="">
+            @Html.MvcSiteMap().SiteMapPath()
+        </div>
+        <section class="SekcjaKoszyk">
+            <div class="SekcjaHeader" style="margin-bottom: 0px;">
+                <h1>
+                    @RenderSection("SectionTitle", required: false)
+                </h1>
+            </div>
+            @RenderBody()
+        </section>
+
+    </div>*@

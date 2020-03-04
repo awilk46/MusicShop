@@ -1,0 +1,118 @@
+﻿@model IEnumerable<MusicShop.Models.Zamowienie>
+@{
+    ViewBag.Title = "ListaZamowien";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+@section styles{
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+
+}
+    <div>
+        <h2 class="h-edit">Twoje zamówienia</h2>
+        <div class="border-clas-ot"></div>
+
+        <div style="text-align:center;">
+            @if (Model.Any())
+            {
+                <table id="zamowienia-table" style="margin-left:auto; margin-right:auto;">
+
+                    @foreach (var zamowienie in Model)
+                    {
+                        <tr @if (zamowienie.StanZamowienia == MusicShop.Models.StanZamowienia.Nowe) { <text> class="noweZamowienie" </text> }>
+                            <td>
+                                <strong>Nr zamówienia: </strong>@zamowienie.ZamowienieID
+                            </td>
+                            <td>
+                                <strong>Data: </strong>
+                                @zamowienie.DataZamowienia.ToString("dd-MM-yyyy")
+                            </td>
+                            <td>
+                                <strong>Stan: </strong><br />
+
+                                @if (ViewBag.UserIsAdmin)
+                                {
+                                    using (Html.BeginForm("ZmianaStanuZamowienia", "Manage"))
+                                    {
+                                        @Html.HiddenFor(o => zamowienie.ZamowienieID)
+                                        @Html.EnumDropDownListFor(o => zamowienie.StanZamowienia, new { @class = "StanZamowieniaZmien custom-select", style="width:200px;"})
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(o => zamowienie.StanZamowienia)
+                                }
+                            </td>
+                            <td>
+                                <strong>Dane wysyłkowe:</strong><br />
+                                @zamowienie.Imie @zamowienie.Nazwisko<br />
+                                @zamowienie.Adres<br />
+                                @zamowienie.KodPocztowy @zamowienie.Miasto<br />
+                            </td>
+                            <td>
+                                <strong>Łączny koszt:</strong> @zamowienie.CenaZamowienia zł
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <section>
+                                    <ul class="TrzyKolumnyList duzaListaAlbumy-bottom">
+
+                                        @foreach (var pozycjaZamowienia in zamowienie.PozycjeZamowienia)
+                                        {
+                                            <li>
+                                                <article>
+                                                    <a class="anchor-edit" href="@Url.Action("Szczegoly", "Albumy", new { id = pozycjaZamowienia.AlbumID })">
+                                                        <img class="kurs" style="width:250px; height:250px;" src="@Url.Content("~/Content/Images/" + pozycjaZamowienia.Album.Okladkalbumu)" />
+                                                    </a><br/>
+                                                    <a class="anchor-edit"  href="@Url.Action("Szczegoly", "Albumy", new { id = pozycjaZamowienia.AlbumID })">
+                                                        @pozycjaZamowienia.Album.NazwaZespolu - @pozycjaZamowienia.Album.NazwaAlbumu
+                                                    </a><br/>
+                                                    <a class="anchor-edit"  href="@Url.Action("Szczegoly", "Albumy", new { id = pozycjaZamowienia.AlbumID })">
+                                                       <strong>
+                                                        sztuk: @pozycjaZamowienia.Ilosc, łącznie: @(pozycjaZamowienia.Ilosc * @pozycjaZamowienia.CenaZakupu)  zł
+                                                       </strong>
+                                                    </a>                                                  
+                                                </article>
+                                            </li>
+                                        }
+                                    </ul>
+                                </section>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <!-- nastepne zamowienie -->
+                    }
+                </table>
+            }
+            else
+            {
+                <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
+                    Brak zamówień.
+                </div>
+            }
+        </div>
+    </div>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
+    <script>
+        $(".StanZamowieniaZmien").on('change', function (e) {
+        //e.preventDefault();
+        var f = $(this.form);
+        var tr = f.closest("tr");
+        var action = f.attr("action");
+        var serializedForm = f.serialize();
+        $.post(action, serializedForm).done(function (data) {
+            if (data == '@MusicShop.Models.StanZamowienia.Nowe.ToString()') {
+                tr.addClass("noweZamowienie");
+            }
+            else {
+                tr.removeClass("noweZamowienie");
+            }
+          });
+    });
+    </script>
+}

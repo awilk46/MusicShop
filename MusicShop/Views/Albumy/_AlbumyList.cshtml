@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MusicShop.Models.Album>
+@using MusicShop.Infrastructure;
+
+
+
+@section Styles{
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+
+}
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/modernizr-2.6.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.0.0.slim.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/umd/popper.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.0.0.min.js")"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+}
+    
+        <div id="SekcjaListaKategorii" class="flex-container-a-list pad-bot pad-lf del-marg" >
+            @foreach (var album in Model)
+            {
+                <div class="containerz flex-item2">
+                    <div>
+                        <img class="imagez category-tiles" src="@Url.IkonyKategoriiSciezka(album.Okladkalbumu)" alt="Card image cap">
+                    </div>
+                    <div class="overlayz">
+                        <div class="textz">@album.NazwaZespolu, @album.NazwaAlbumu</div>
+                        <div class="img-add-to-box-right">
+                            <a href="@Url.Action("DodajDoKoszyka","Koszyk",new {id= album.AlbumID })">
+                                <img src="../Content/Images/add.png" alt="Card image cap">
+                            </a>
+                        </div>
+                        <div class="img-add-to-box-left">
+                            <a href="@Url.Action("Szczegoly","Albumy",new {id= album.AlbumID })">
+                                <img src="../Content/Images/info.png" alt="Card image cap">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+

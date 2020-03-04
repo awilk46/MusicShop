@@ -1,0 +1,109 @@
+﻿@model MusicShop.ViewModels.KoszykViewModel
+@using MusicShop.Infrastructure
+
+@{
+    ViewBag.Title = "Koszyk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div id =""class="koszyk-a width-search-sitemap pad-sm border koszyk-sm-mg edit-width bg-light">
+        <a class="anchor-edit" href="link">
+            @Html.MvcSiteMap().SiteMapPath()
+        </a>
+    </div>
+ 
+        <div class="flex-category-container">
+            <div class="flex-koszyk-item categories-menu-width koszyk-cat-mg">
+                @Html.Action("KategorieMenu", "Albumy")
+            </div>
+            <div class="flex-koszyk-container item-koszyk-width2 koszyk-items-mg">
+                <div class="flex-koszyk-item ">
+                    <table id="table-kosz" class="table table-bordered">
+                        @foreach (var item in Model.PozycjaKoszyka)
+                        {
+                            <tr id="koszyk-wiersz-@item.Album.AlbumID" class="">
+                                <td class="col" style="width:20%;">
+                                    <div style=" text-align:center;">
+                                        <img style="width:60px;height:60px;" src="@Url.IkonyKategoriiSciezka(item.Album.Okladkalbumu)" alt="Card image cap">
+                                    </div>
+                                </td>
+                                <td class="col">@item.Album.NazwaAlbumu, @item.Album.RokWydania</td>
+                                <td class="col">@item.Album.NazwaZespolu</td>
+                                <td class="col">@item.Album.RodzajKrazka</td>
+                                <td class="col koszyk-a" style="font-weight:bold;">
+                                    <a href="@Url.Action("Szczegoly","Albumy",new {id= item.Album.AlbumID})">
+                                        Więcej szczegółów
+                                    </a>
+                                </td>
+                                <td class="col">Ilość:<span id="koszyk-ilsoc-pozycji-@item.Album.AlbumID">@item.Ilosc</span></td>
+                                <td class="col">@String.Format("{0:0.##}", item.Wartosc)zł</td>
+                                <td class="col koszyk-a"><a class="usunAlbum" data-id="@item.Album.AlbumID" href="#">Usuń</a></td>
+
+                            </tr>
+                        }
+                        <tr id="koszyk-empty-message" @if (Model.PozycjaKoszyka != null && Model.PozycjaKoszyka.Count > 0) { <text> class="hidden" </text> }>
+                            <td>Twój koszyk jest pusty, może chcesz coś dodać do koszyka</td>
+                            @*TUTAJ BĘDZIE REEKOMENDAAAAACJA*@
+                        </tr>
+                    </table>
+                </div>
+                <div id="CenaCalkowita" class="flex-koszyk-item price-font" style="">Razem: <span id="calkowita-cena-wartosc" class="price-dec" style=""> @String.Format("{0:0.##}", Model.CenaCalkowita)</span><text class="price-dec">zł</text></div>
+                <div class="SekcjaPrzyciski flex-koszyk-item koszyk-btn-mg">
+                    @* <a class="PrzyciskiLink" href="@Url.Content("~/")">Kontynuuj zakupy</a>*@
+                    <a class="btn btn-outline-secondary" href="@Url.Content("~/")" role="button">Kontynuuj zakupy</a>
+                    @if (Model.CenaCalkowita > 0)
+                    {
+                        <a id="koszyk-button-zaplac" class="btn btn-outline-secondary" href="@Url.Action("Zaplac","Koszyk")" role="button">Zapłać</a>
+                        @* <a id="koszyk-button-zaplac" class="PrzyciskiLink" href="@Url.Action("Zaplac","Koszyk")">Zapłać</a>*@
+                    }
+
+                </div>
+                <h2 class="h-edit" style="border-bottom: 1px solid darkgray; display: block; margin: 0 auto;">Rekomendacje</h2>
+                <div class="border-cl" style="border-bottom:solid;"></div>
+                <div class="flex-reco-container">
+                    @Html.Action("WyswietlRekomendacje", "Koszyk")
+                </div>
+            </div>
+        </div>
+
+@section Scripts{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript">
+        $(function () {
+            $(".usunAlbum").click(function () {
+
+                var recordDoUsuniecia = $(this).attr("data-id");
+
+                if (recordDoUsuniecia != '') {
+                    $.post("/Koszyk/UsunZKoszyka", { "albumId": recordDoUsuniecia },
+                        function (response) {
+                            if (response.IloscPozycjiUsuwanej == 0) {
+
+                                $('#koszyk-wiersz-' + response.IdPozycjiUsuwanej).fadeOut('slow', function () {
+                                    if (response.KoszykIloscPozycji == 0) {
+                                        $("#koszyk-empty-message").removeClass("hidden");
+                                    }
+                                });
+                            } else {
+                                $('#koszyk-ilosc-pozycji-' + response.IdPozycjiUsuwanej).text(response.IloscPozycjiUsuwanej);
+                            }
+
+                            if (response.KoszykIloscPozycji == 0) {
+                                $('#koszyk-button-zaplac').addClass('hidden');
+                                $('#CenaCalkowita').addClass('invisible');
+                            }
+                            $('#calkowita-cena-wartosc').text(response.KoszykCenaCalkowita);
+                            $('#koszyk-naglowek-ilosc-elementow').text(response.KoszykIloscPozycji);
+                        });
+                    return false;
+                }
+            });
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            var bodies = document.body;
+            bodies.classList.add("width-with-table");
+
+        });
+    </script>
+}

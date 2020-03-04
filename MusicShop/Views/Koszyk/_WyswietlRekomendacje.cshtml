@@ -1,0 +1,26 @@
+﻿@model IEnumerable<MusicShop.ViewModels.RecommendViewModel>
+@using MusicShop.Infrastructure
+
+
+    @foreach (var obj in Model)
+    {
+
+            <div class="containerz flex-item-reco">
+                <div>
+                    <img class="imagez category-tiles" src="@Url.IkonyKategoriiSciezka(obj.Album.Okladkalbumu)" alt="Card image cap">
+                </div>
+                <div class="overlayz">
+                    <div class="textz">@obj.Album.NazwaZespolu, @obj.Album.NazwaAlbumu</div>
+                    <div class="img-add-to-box-right">
+                        <a href="@Url.Action("DodajDoKoszyka","Koszyk",new {id= obj.Album.AlbumID })">
+                            <img src="../Content/Images/add.png" alt="Card image cap">
+                        </a>
+                    </div>
+                    <div class="img-add-to-box-left">
+                        <a href="@Url.Action("Szczegoly","Albumy",new {id= obj.Album.AlbumID })">
+                            <img src="../Content/Images/info.png" alt="Card image cap">
+                        </a>
+                    </div>
+                </div>
+        </div>
+    }

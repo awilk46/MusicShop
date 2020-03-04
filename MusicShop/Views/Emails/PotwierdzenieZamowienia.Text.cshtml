@@ -1,0 +1,28 @@
+﻿@model MusicShop.ViewModels.PotwierdzenieZamowieniaEmail
+Content-Type: text/plain; charset=utf-8
+
+Dziękujemy!
+
+Złożyłeś zamówienie w serwisie muzycznym.
+Zamówione pozycje :
+
+@{
+    IEnumerable<MusicShop.Models.PozycjaZamowienia> pozycjeZamowienia = Model.PozycjeZamowienia;
+
+    for (int i = 0; i < pozycjeZamowienia.Count(); i++)
+    {
+        @pozycjeZamowienia.ElementAt(i).Album.NazwaAlbumu
+    }
+}
+
+Prosimy o przelanie kwoty @Model.Wartosc zł, tytułem: zamówienie nr @Model.NumerZamowienia na nasze konto bankowe:
+
+Serwis Muzyczny Sp. z o.o
+ul. Niewiem 1/3/4
+11-222 Gdzieś
+Bank 10 1000 0110 0000 0000 0000
+
+Po otrzymaniu przelewu wysyłka zostanie zrealizowana w ciągu 24h.
+
+Dziękujemy i zapraszamy ponownie!
+serwismuzyczny.pl

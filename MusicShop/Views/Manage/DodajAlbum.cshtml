@@ -1,0 +1,131 @@
+﻿@model MusicShop.ViewModels.EditAlbumViewModel
+@{
+    ViewBag.Title = "DodajAlbum";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2 class="h-edit">Edycja produktu</h2>
+<div class="border-clas-ot"></div>
+<div class="card-body-edit koszyk-btn-mg">
+    @if (Model.Potwierdzenie.HasValue && Model.Potwierdzenie.Value)
+    {
+        <div style="text-align: center; margin: 50px;">
+            Pomyślnie wprowadzono zmiany!
+        </div>
+    }
+
+    @using (@Html.BeginForm("DodajAlbum", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="acc-validation-message">
+            @Html.ValidationSummary()
+        </div>
+        @Html.HiddenFor(o => o.Album.AlbumID)
+        @Html.HiddenFor(o => o.Album.Okladkalbumu)
+
+        <div>
+            <table id="albumedit-address-table" style="margin-left:auto; margin-right:auto;">
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.NazwaZespolu, "Zespół:")</td>
+                    <td>@Html.TextBoxFor(o => o.Album.NazwaZespolu, new { @class="form-control"})</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="acc-validation-message" style="    padding-left: 55px;">@Html.ValidationMessageFor(o => o.Album.NazwaZespolu)</td>
+                </tr>
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.NazwaAlbumu, "Tytuł:")</td>
+                    <td>@Html.TextBoxFor(o => o.Album.NazwaAlbumu, new { @class = "form-control" })</td>
+                </tr>
+                <tr >
+                    <td colspan="2" class="acc-validation-message" style="    padding-left: 55px;">@Html.ValidationMessageFor(o => o.Album.NazwaAlbumu)</td>
+                </tr>
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.RokWydania, "Rok wydania:")</td>
+                    <td>@Html.TextBoxFor(o => o.Album.RokWydania, new { @class = "form-control" })</td>
+                </tr>
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.Opis, "Opis:")</td>
+                    <td>@Html.TextBoxFor(o => o.Album.Opis, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="acc-validation-message">@Html.ValidationMessageFor(o => o.Album.Opis)</td>
+                </tr>
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.RodzajKrazka, "Rodzaj krążka:")</td>
+                    <td>
+                        @Html.EnumDropDownListFor(x => x.Album.RodzajKrazka, new { @class = "custom-select" })
+                    </td>
+                    <td></td>
+                </tr>
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Kategorie, "Kategoria:")</td>
+                    <td>
+                    @Html.DropDownListFor(m => m.Album.KategoriaID, new SelectList(Model.Kategorie, "KategoriaID", "NazwaKategorii", Model.Kategorie.First().KategoriaID),new { @class="custom-select"})
+                    </td>
+                    <td></td>
+                </tr>
+                <tr style="height:50px;     text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.CenaAlbumu, "Cena:")</td>
+                    <td>@Html.TextBoxFor(o => o.Album.CenaAlbumu, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="acc-validation-message" style="    padding-left: 95px;">@Html.ValidationMessageFor(o => o.Album.CenaAlbumu)</td>
+                </tr>
+                <tr style="    text-align: end;">
+                    <td>@Html.LabelFor(o => o.Album.Bestseller, "Bestseller:")</td>
+                    <td style="text-align:start; padding-left:5px;">
+                        <div class="custom-control custom-checkbox" style="margin-bottom:5px;">
+                            @Html.CheckBoxFor(o => o.Album.Bestseller, new { @class = "custom-control-input", @id = "materialUnchecked" })
+                            @Html.LabelFor(o => o.Album.Bestseller, new { @class = "custom-control-label", @for = "materialUnchecked" })
+                        </div>
+                    </td>
+                 
+                    <td></td>
+                </tr>
+                @if (ViewBag.EditMode == null || !ViewBag.EditMode)
+                {
+                    <tr>
+                        <td colspan="3">
+                            <div class="upload">
+                                <input type="file" name="file" />
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr>
+
+                    <td style="text-align: left">
+                        @if (ViewBag.EditMode == true)
+                        {
+                            if (Model.Album.Ukryty)
+                            {
+                                <a class="btn btn-outline-secondary" href="@Url.Action("PokazAlbum", "Manage", new { albumId = Model.Album.AlbumID })" role="button">Przywróć</a>
+
+                            }
+                            else
+                            {
+                                <a class="btn btn-outline-secondary" href="@Url.Action("UkryjAlbum", "Manage", new { albumId = Model.Album.AlbumID })" role="button">Usuń</a>
+
+                            }
+                        }
+                    </td>
+
+
+                    <td style="text-align: center; padding-top:5px;">
+                        <button type="submit" class="btn btn-outline-secondary">Zapisz</button>
+
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script src="~/Scripts/jquery-2.2.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}

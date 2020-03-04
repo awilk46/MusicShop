@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNet.Identity
+
+@section scripts{
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+}
+
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-nav" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+                <li class="nav-item">
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link active" })
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a>
+                </li>
+
+            }
+        }
+        else
+        {
+            <li class="nav-item text-dec-edit">
+                @Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link active" })
+            </li>
+            <li class="nav-item text-dec-edit">
+                @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link active" })
+            </li>
+        }

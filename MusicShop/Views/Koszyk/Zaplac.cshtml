@@ -1,0 +1,84 @@
+﻿@model MusicShop.Models.Zamowienie
+
+@{
+    ViewBag.Title = "Zaplac";
+    Layout = "~/Views/Shared/_RightSectionLayout.cshtml";
+}
+
+
+@section SectionTitle{
+    Uzupełnij dane zamówienia
+}
+<div class="acc-validation-message" style="text-align:center;">
+    @Html.ValidationSummary()
+</div>
+
+@using (@Html.BeginForm("Zaplac", "Koszyk"))
+{
+    <table id="checkout-address-table" class="manag-acc-edit" style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <td>@Html.LabelFor(o => o.Imie, "Imię:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.Imie, new { @class="form-control"})</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom:5px;">@Html.ValidationMessageFor(o => o.Imie)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.Nazwisko, "Nazwisko:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.Nazwisko, new { @class = "form-control" })</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center;padding-bottom:5px;">@Html.ValidationMessageFor(o => o.Nazwisko)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.Adres, "Adres:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.Adres, new { @class = "form-control" })</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom:5px;">@Html.ValidationMessageFor(o => o.Adres)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.Miasto, "Miasto:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.Miasto, new { @class = "form-control" })</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom:5px;">@Html.ValidationMessageFor(o => o.Miasto)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.KodPocztowy, "Kod pocztowy:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.KodPocztowy, new { @class = "form-control" })</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom:5px;">@Html.ValidationMessageFor(o => o.KodPocztowy)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.Phone, "Numer telefonu:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.Phone, new { @class = "form-control" })</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom:5px;">@Html.ValidationMessageFor(o => o.Phone)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.Email, "Adres e-mail:")</td>
+            <td style="padding-bottom:5px;">@Html.TextBoxFor(o => o.Email, new { @class = "form-control" })</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center;padding-bottom:5px;">@Html.ValidationMessageFor(o => o.Email)</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="text-align:center;">
+                    <a class="btn btn-outline-secondary" href=" " role="button">Wróć</a>
+                    <button type="submit" class="btn btn-outline-secondary">Potwierdź</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,8 @@
+﻿@model IEnumerable<MusicShop.Models.Kategoria>
+
+<div class="list-group kat-menu-width">
+    @foreach (var kategoria in Model)
+    {
+<a href="@Url.Action("Lista","Albumy",new{nazwaKategorii= kategoria.NazwaKategorii.ToString()})" class="list-group-item list-group-item-action">@kategoria.NazwaKategorii</a>
+}
+</div>

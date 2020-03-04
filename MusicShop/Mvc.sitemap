@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    
+    <mvcSiteMapNode title="Kategorie" controller="Albumy" action="Lista"
+                    dynamicNodeProvider="MusicShop.Infrastructure.KategorieDynamicNodeProvider, MusicShop">
+    
+    <mvcSiteMapNode title="Album" controller="Albumy" action="Szczegoly"
+                    dynamicNodeProvider="MusicShop.Infrastructure.AlbumySzczegolyDynamicNodeProvider, MusicShop" />
+     </mvcSiteMapNode>
+    
+    <mvcSiteMapNode title="Koszyk" controller="Koszyk" action="Index">
+      <mvcSiteMapNode title="Dane zamowienia" controller="Koszyk" action="Zaplac"/>
+      <mvcSiteMapNode title="Potwierdzenie zamówienia" controller="Koszyk" action="PotwierdzenieZamowienia"/>
+    </mvcSiteMapNode>
+    
+    <mvcSiteMapNode title="Logowanie" controller="Account" action="Login"/>
+    <mvcSiteMapNode title="Zapomniałeś hasła?" controller="Account" action="ForgotPassword"/>
+    <mvcSiteMapNode title="Zapomniałeś hasła?" controller="Account" action="ForgotPasswordConfirmation"/>
+    <mvcSiteMapNode title="Resetowanie hasła" controller="Account" action="ResetPassword"/>
+    <mvcSiteMapNode title="Resetowanie hasła" controller="Account" action="ResetPasswordConfirmation"/>
+    <mvcSiteMapNode title="Rejestracja" controller="Account" action="Register"/>
+    
+
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

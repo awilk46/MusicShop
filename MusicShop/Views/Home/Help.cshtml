@@ -1,0 +1,66 @@
+﻿@model MusicShop.ViewModels.HelpViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Pomoc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="h-edit border-clas-ot2">Pomoc</h2>
+
+
+@using (Html.BeginForm("Help", "Home"))
+{
+<div style="text-align: center;">
+    @Html.ValidationSummary()
+</div>
+    <table class="manag-acc-edit" style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <td>@Html.LabelFor(o => o.Name, "Imię:")</td>
+            <td style="text-align:left;">
+                @Html.TextBoxFor(m => m.Name, new { @style = " padding-bottom: 5px;", @class="form-control" })
+            </td>
+        </tr>
+        <tr >
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom: 5px;">@Html.ValidationMessageFor(o => o.Name)</td>
+        </tr>
+        <tr >
+            <td>@Html.LabelFor(o => o.Email, "E-mail:")</td>
+            <td style="text-align:left;">
+                @Html.TextBoxFor(m => m.Email,new { @style= " padding-bottom: 5px;", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom: 5px;">@Html.ValidationMessageFor(o => o.Email)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(o => o.Subject, "Temat:")</td>
+            <td style="text-align:left;">
+                @Html.TextBoxFor(m => m.Subject, new { @style = "padding-bottom: 5px;", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom: 5px;">@Html.ValidationMessageFor(o => o.Subject)</td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;">@Html.LabelFor(o => o.Message, "Wiadomość:")</td>
+            <td>
+                @Html.TextAreaFor(m => m.Message, new { @cols = "100", @rows = "8", @style = "width:100%; padding-bottom: 5px;", @class = "form-control" })
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="acc-validation-message" style="text-align:center; padding-bottom: 5px;">@Html.ValidationMessageFor(o => o.Message)</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center; padding-left:80px;">
+                <button type="submit" class="btn btn-outline-secondary">Wyślij</button>
+            </td>
+        </tr>
+    </table>
+}
+@section scripts{
+    <script src="~/Scripts/jquery-2.2.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}

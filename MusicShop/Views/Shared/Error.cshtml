@@ -1,0 +1,21 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (String.IsNullOrEmpty(ViewBag.errorMessage))
+    {
+        <div style="text-align: center; margin:6%;">
+              <h1 class="text-danger">Wtstąpił błąd podczas przetważania rządania.</h1>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: center; margin:6%;">
+             <h1 class="text-danger">@ViewBag.errorMessage</h1>
+        </div>
+    }
+}

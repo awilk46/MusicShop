@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align: center; margin: 6%; margin-left: 30%; margin-right: 30%;">
+    <h1>Potwierdzenie E-mail,</h1>
+    <h2 style="text-align: justify;">
+        Dziękujemy za potwierdzenie E-mail. Proszę @Html.ActionLink("Kliknij tutaj", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink", @class="anchor-edit" }), aby wrócić do strony głównej.
+    </h2>
+</div>

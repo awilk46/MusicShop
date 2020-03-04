@@ -1,0 +1,40 @@
+﻿@model MusicShop.ViewModels.PotwierdzenieZamowieniaEmail
+Content-Type: text/html; charset=utf-8
+
+<html>
+<body>
+
+    @* @Html.EmbedImage("~/content/Images/logo.png")*@
+
+    <p>Dziękujemy!</p>
+    <p>Złożyłeś zamówienie w serwisie muzycznym.</p>
+    <p>Zamówione pozycje :</p>
+
+    @{
+        IEnumerable<MusicShop.Models.PozycjaZamowienia> pozycjeZamowienia = Model.PozycjeZamowienia;
+
+        for (int i = 0; i < pozycjeZamowienia.Count(); i++)
+        {
+            <p>
+                @pozycjeZamowienia.ElementAt(i).Album.NazwaAlbumu - @pozycjeZamowienia.ElementAt(i).Album.NazwaZespolu
+                - @pozycjeZamowienia.ElementAt(i).Album.CenaAlbumu zł. - @pozycjeZamowienia.ElementAt(i).Ilosc szt.
+            </p>
+            @*<p>
+                    @Html.EmbedImage(Path.Combine((string)Model.sciezkaObrazka, pozycjeZamowienia.ElementAt(i).Album.Okladkalbumu), "", new { @width = 200, @class = "mcnImage", @style = "padding-bottom: 0px;max-width: 500px;border: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;" })
+                </p>*@
+        }
+    }
+
+    <p> Prosimy o przelanie kwoty @Model.Wartosc zł, tytułem: zamówienie nr @Model.NumerZamowienia na nasze konto bankowe:</p>
+    <p>Serwis Muzyczny Sp. z o.o</p>
+    <p>  ul. Niewiem 1/3/4</p>
+    <p> 11-222 Gdzieś</p>
+    <p>  Bank 10 1000 0110 0000 0000 0000</p>
+    <p> Po otrzymaniu przelewu wysyłka zostanie zrealizowana w ciągu 24h.</p>
+    <p>   Dziękujemy i zapraszamy ponownie!</p>
+    <p>  serwismuzyczny.pl</p>
+
+
+</body>
+
+</html>

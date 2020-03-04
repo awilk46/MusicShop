@@ -1,0 +1,167 @@
+﻿@model MusicShop.ViewModels.HomeViewModel
+@using MusicShop.Infrastructure
+
+
+@{
+    ViewBag.Title = "Music Shop";
+}
+@section Styles{
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+    @* <link href="@Url.Content("~/Content/pager.css")" rel="stylesheet" type="text/css" />*@
+}
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/modernizr-2.6.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.0.0.slim.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/umd/popper.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.0.0.min.js")"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+}
+
+@**carousel**@
+
+<!--Carousel Wrapper-->
+<div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-2" data-slide-to="1"></li>
+        <li data-target="#carousel-example-2" data-slide-to="2"></li>
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            @*     <div class="view " style="height: 500px;">*@
+
+            <div class="img-edit">
+                <img class="d-block w-100" src="../Content/Images/music1.png"
+                     alt="First slide">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-border">
+                <h3 class="h3-responsive">Kolekcje albumów</h3>
+                <p>Wybierz najlepsze płyty dla siebie</p>
+            </div>
+            <div class="mask rgba-black-light"></div>
+
+        </div>
+        <div class="carousel-item">
+            <!--Mask color-->
+            @*<div class="view" style="height: 500px;">*@
+            <div class="img-edit">
+                <img class="d-block w-100" src="../Content/Images/music2.png"
+                     alt="Second slide">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-border">
+                <h3 class="h3-responsive">Strong mask</h3>
+                <p>Secondary text</p>
+            </div>
+            <div class="mask rgba-black-strong"></div>
+
+        </div>
+        <div class="carousel-item">
+            <!--Mask color-->
+            @* <div class="view" style="height: 500px;">*@
+            <div class="img-edit">
+                <img class="d-block w-100" src="../Content/Images/music3.png"
+                     alt="Third slide">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-border">
+                <h3 class="h3-responsive">Slight mask</h3>
+                <p>Third text</p>
+            </div>
+            <div class="mask rgba-black-slight"></div>
+        </div>
+    </div>
+    <!--/.Slides-->
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+</div>
+<!--/.Carousel Wrapper-->
+
+
+<div class="titles-edit">
+    <h1>Kategorie</h1>
+</div>
+<div class="flex-container">
+    @foreach (var kategoria in Model.Kategorie)
+    {
+
+        <div class="card flex-item" style="width: 18rem;">
+
+            <img class="card-img-top category-tiles" src="@Url.IkonyKategoriiSciezka(kategoria.ObrazKategorii)" alt="Card image cap">
+            <div class="card-body card-body-edit">
+                <h5 class="card-title">@kategoria.NazwaKategorii</h5>
+                <p class="card-text">@kategoria.OpisKategorii</p>
+                @*   <a href="@Url.Action("Lista","Albumy", new { nazwaKategorii = kategoria.NazwaKategorii.ToLower()})" class="btn btn-primary">Zobacz</a>*@
+                <a href="@Url.Action("Lista","Albumy", new { nazwaKategorii = kategoria.NazwaKategorii.ToLower()})" class="btn btn-outline-secondary">Zobacz</a>
+            </div>
+        </div>
+    }
+</div>
+<div class="titles-edit">
+    <h1>Bestsellery</h1>
+</div>
+
+<div class="flex-container">
+    @foreach (var bestseller in Model.Bestsellery)
+    {
+        <div class="containerz flex-item2">
+            <div>
+                <img class="imagez category-tiles" src="@Url.IkonyKategoriiSciezka(bestseller.Okladkalbumu)" alt="Card image cap">
+            </div>
+            <div class="overlayz">
+                <div class="textz">@bestseller.NazwaZespolu, @bestseller.NazwaAlbumu</div>
+                <div class="img-add-to-box-right">
+                    <a href="@Url.Action("DodajDoKoszyka","Koszyk",new {id= bestseller.AlbumID })">
+                        <img src="../Content/Images/add.png" alt="Card image cap">
+                    </a>
+                </div>
+                <div class="img-add-to-box-left">
+                    <a href="@Url.Action("Szczegoly","Albumy",new {id= bestseller.AlbumID })">
+                        <img src="../Content/Images/info.png" alt="Card image cap">
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@*Dodać gdzieś szczegóły*@
+<div class="titles-edit">
+    <h1>Nowości</h1>
+</div>
+<div class="flex-container">
+    @foreach (var nowosci in Model.Nowosci)
+    {
+        <div class="containerz flex-item2">
+            <div>
+                <img class="imagez category-tiles" src="@Url.IkonyKategoriiSciezka(nowosci.Okladkalbumu)" alt="Card image cap">
+            </div>
+
+            <div class="overlayz">
+                <div class="textz">@nowosci.NazwaZespolu, @nowosci.NazwaAlbumu</div>
+                <div class="img-add-to-box-right">
+                    <a href="@Url.Action("DodajDoKoszyka","Koszyk",new {id= nowosci.AlbumID })">
+                        <img src="../Content/Images/add.png" alt="Card image cap">
+                    </a>
+                </div>
+                <div class="img-add-to-box-left">
+                    <a href="@Url.Action("Szczegoly","Albumy",new {id= nowosci.AlbumID })">
+                        <img src="../Content/Images/info.png" alt="Card image cap">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
